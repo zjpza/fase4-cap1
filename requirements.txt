@@ -1,0 +1,19 @@
+# requirements.txt
+
+# Data
+numpy
+pandas
+
+# ML
+scikit-learn
+matplotlib
+seaborn
+
+# DB
+sqlalchemy
+
+# Dashboard (remover se nao usar)
+streamlit
+
+# Util
+jupyter
