@@ -6,7 +6,8 @@
 
 <br>
 
-## Fase 4 — CAP 1
+## FarmTech Solutions — Fase 4 CAP 1
+## Assistente Agrícola Inteligente com Machine Learning e Dashboard Streamlit
 
 ## Nome do grupo
 
@@ -25,7 +26,19 @@
 
 ## 📜 Descrição
 
-*Descreva seu projeto com base no texto do PBL (até 600 palavras)*
+Esta fase do projeto FarmTech Solutions consolida o conhecimento técnico e analítico adquirido ao longo das fases anteriores, integrando Inteligência Artificial diretamente aos dados agrícolas já coletados, estruturados e armazenados. O foco é transformar dados em conhecimento, utilizando aprendizado de máquina supervisionado (regressão) para gerar previsões e insights relevantes sobre o campo, como a relação entre umidade, pH e produtividade, e o impacto das ações de irrigação e fertilização no rendimento final das culturas.
+
+O protótipo de Assistente Agrícola Inteligente desenvolvido integra sensores IoT (reais ou simulados via Wokwi), um banco de dados simples e modelos de regressão (Scikit-Learn) para prever variáveis críticas do campo — umidade do solo, pH e rendimento esperado. Com base nas previsões, o sistema sugere ações futuras de irrigação e manejo agrícola, implementadas em Python e/ou C++. Os resultados são apresentados em um dashboard interativo desenvolvido com Streamlit, facilitando a interpretação dos dados por gestores agrícolas.
+
+A solução demonstra domínio técnico e pensamento analítico na jornada completa: coleta de dados via sensores, armazenamento em banco SQL, modelagem ML com Scikit-Learn, avaliação via métricas (MAE, MSE, RMSE, R²), sugestão automatizada de ações e visualização interativa em tempo real. Tudo isso representa o início da Agricultura Cognitiva — tecnologia que aprende com os dados do campo para otimizar resultados de forma sustentável.
+
+### Objetivos
+- Modelar banco SQL para persistir dados de sensores IoT
+- Treinar modelos de regressão (linear, múltipla e não linear) com Scikit-Learn
+- Avaliar modelos com métricas estatísticas robustas
+- Sugerir ações de irrigação e manejo baseadas em predições
+- Criar dashboard Streamlit com métricas, gráficos e previsões em tempo real
+- Documentar todo o pipeline e apresentar via vídeo de até 5 minutos
 
 ## 📁 Estrutura de pastas
 
@@ -33,7 +46,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>.github</b>: Nesta pasta ficarão os arquivos de configuração específicos do GitHub que ajudam a gerenciar e automatizar processos no repositório.
 
-- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
+- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens, logos e screenshots do Streamlit.
 
 - <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
 
@@ -41,32 +54,72 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
 
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto ao longo das 7 fases.
-  - <b>src/data</b>: Dataset e scripts de ETL (geração, feature engineering, ingestão SQL).
-  - <b>src/sql</b>: Schema DDL, seed data e views.
-  - <b>src/ml</b>: Notebooks de análise exploratória, treinamento de modelos e avaliação.
-  - <b>src/dashboard</b>: Interface visual com gráficos e alertas.
+- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto.
+  - <b>src/data</b>: Dataset simulado de sensores agrícolas e scripts de ETL (geração, feature engineering, ingestão SQL).
+  - <b>src/sql</b>: Schema DDL, seed data e views para persistência de dados IoT (umidade, pH, temperatura, produtividade).
+  - <b>src/ml</b>: Notebooks de análise exploratória, treinamento de modelos de regressão (Scikit-Learn), avaliação de métricas (MAE, MSE, RMSE, R²) e script de predição.
+  - <b>src/dashboard</b>: Aplicação Streamlit com métricas de desempenho, gráficos de correlação, previsões em tempo real e recomendações de irrigação para gestores agrícolas.
 
 - <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
 
 ## 🔧 Como executar o código
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
+### Pré-requisitos
+- Python 3.10+
+- pip
+- Git
 
+### Passo a passo
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/zjpza/fase4-cap1.git
+cd fase4-cap1
+```
+
+2. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+3. Crie e popule o banco de dados:
+```bash
+# SQLite (exemplo)
+sqlite3 farmtech.db < src/sql/01_schema.sql
+# ou rode o script de ingestão automática:
+python src/data/load_to_sql.py
+```
+
+4. Treine o modelo de Machine Learning:
+```bash
+jupyter notebook src/ml/02_modelagem.ipynb
+```
+
+5. Execute o dashboard Streamlit:
+```bash
+streamlit run src/dashboard/app.py
+```
+
+O dashboard ficará disponível em `http://localhost:8501`.
+
+## 📎 Links e Observações
+
+- <b>Vídeo demonstrativo (Parte 1)</b>: <colocar_link_aqui> (YouTube — não listado)
+- <b>Vídeo demonstrativo (Parte 2)</b>: <colocar_link_aqui> (YouTube — não listado)
+- <b>Vídeo Ir Além 1</b>: <colocar_link_aqui> (YouTube — não listado)
+- <b>Vídeo Ir Além 2</b>: <colocar_link_aqui> (YouTube — não listado)
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+* 1.0.0 - 26/05/2026
+    * Fase 4 CAP 1 — FarmTech Solutions: pipeline ML, regressão com Scikit-Learn, dashboard Streamlit, previsões de irrigação e manejo agrícola
+* 0.3.0 - XX/XX/2026
+    * Fase 3: coleta e estruturação de dados agrícolas via sensores IoT
+* 0.2.0 - XX/XX/2026
+    * Fase 2: modelagem de banco de dados relacional FarmTech
+* 0.1.0 - XX/XX/2026
+    * Fase 1: kickoff e mapeamento do problema agrícola
 
 ## 📋 Licença
 
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/zjpza/fase4-cap1">FIAP Fase 4 CAP 1</a> por <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://fiap.com.br">Fiap</a> está licenciado sobre <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
+<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/zjpza/fase4-cap1">FarmTech Solutions — Fase 4 CAP 1</a> por <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://fiap.com.br">Fiap</a> está licenciado sobre <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
