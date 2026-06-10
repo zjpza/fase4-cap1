@@ -8,12 +8,14 @@ pandas
 scikit-learn
 matplotlib
 seaborn
+joblib
 
 # DB
 sqlalchemy
 
-# Dashboard (remover se nao usar)
+# Dashboard
 streamlit
+plotly
 
 # Util
 jupyter

@@ -82,20 +82,31 @@ cd fase4-cap1
 pip install -r requirements.txt
 ```
 
-3. Crie e popule o banco de dados:
+> O banco `farmtech.db` não é versionado: ele é regenerado pelos scripts abaixo.
+> Rode os passos na ordem indicada.
+
+3. Gere o dataset processado (a partir da base agronômica em `src/data/raw`):
 ```bash
-# SQLite (exemplo)
-sqlite3 farmtech.db < src/sql/01_schema.sql
-# ou rode o script de ingestão automática:
+python src/data/generate_dataset.py
+```
+Isso cria `src/data/processed/farmtech_dataset.csv` com a telemetria de sensores e o
+alvo de regressão `produtividade_kg_ha`.
+
+4. Crie e popule o banco de dados:
+```bash
 python src/data/load_to_sql.py
 ```
+O script lê o CSV processado, recria o schema (`src/sql/01_schema.sql`), trata
+nulos/duplicatas e popula as tabelas. Detalhes em `src/sql/README_SQL.md`.
 
-4. Treine o modelo de Machine Learning:
+5. Treine e avalie o modelo de Machine Learning (rode os notebooks na ordem):
 ```bash
+jupyter notebook src/ml/01_eda.ipynb
 jupyter notebook src/ml/02_modelagem.ipynb
+jupyter notebook src/ml/03_avaliacao.ipynb
 ```
 
-5. Execute o dashboard Streamlit:
+6. Execute o dashboard Streamlit:
 ```bash
 streamlit run src/dashboard/app.py
 ```

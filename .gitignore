@@ -17,12 +17,21 @@ venv/
 # Dados
 *.csv
 !src/data/README*
+# versiona os datasets do projeto (base reusada da Fase 3 + processado)
+!src/data/raw/*.csv
+!src/data/processed/*.csv
+
+# Banco SQLite gerado (recriavel via load_to_sql.py)
+*.db
 
 # Modelos
 *.pkl
 *.joblib
 *.h5
 *.pth
+# versiona o modelo final treinado para o dashboard rodar sem re-treino
+!src/ml/models/*.pkl
+!src/ml/models/*.joblib
 
 # Logs
 *.log
