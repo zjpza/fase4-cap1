@@ -1,0 +1,28 @@
+{
+  "features": [
+    "temperatura",
+    "umidade",
+    "ph",
+    "luminosity",
+    "n",
+    "p",
+    "k",
+    "chuva_mm",
+    "cultura"
+  ],
+  "numeric": [
+    "temperatura",
+    "umidade",
+    "ph",
+    "luminosity",
+    "n",
+    "p",
+    "k",
+    "chuva_mm"
+  ],
+  "categorical": [
+    "cultura"
+  ],
+  "target": "produtividade_kg_ha",
+  "melhor_modelo": "Polynomial(grau2)+Ridge"
+}
