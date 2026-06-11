@@ -1,0 +1,20 @@
+# Configuracao do Wokwi (extensao VS Code).
+#
+# A extensao do VS Code espera o firmware ja COMPILADO (.hex/.elf), gerado pelo
+# Arduino CLI / PlatformIO a partir de arduino_sensores.ino. Ajuste os caminhos
+# abaixo conforme a saida da sua compilacao.
+#
+# Para o fluxo web (https://wokwi.com) este arquivo NAO e necessario: basta colar
+# arduino_sensores.ino e usar o diagram.json desta pasta.
+
+[wokwi]
+version = 1
+# Exemplo (Arduino CLI, placa esp32:esp32:esp32):
+# firmware = "build/esp32.esp32.esp32/arduino_sensores.ino.bin"
+# elf      = "build/esp32.esp32.esp32/arduino_sensores.ino.elf"
+firmware = ""
+elf = ""
+
+# Bibliotecas necessarias:
+#   - DHT sensor library (Adafruit)
+#   - Adafruit Unified Sensor
