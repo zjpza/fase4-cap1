@@ -1,5 +1,8 @@
 # .gitignore para Python / FIAP
 
+# Credenciais (NUNCA versionar) - use .env.example como modelo
+.env
+
 # Python
 __pycache__/
 *.py[cod]
@@ -42,3 +45,10 @@ Thumbs.db
 # IDEs
 .vscode/
 .idea/
+
+
+#Memoria 
+memory/
+
+#Guia local
+GUIA TESTE E VIDEO.md

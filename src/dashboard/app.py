@@ -21,16 +21,18 @@ from pathlib import Path
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from sqlalchemy import create_engine
 
 ROOT = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT / "farmtech.db"
+SRC_DIR = ROOT / "src"
 DATA_DIR = ROOT / "src" / "data"
 ML_DIR = ROOT / "src" / "ml"
 
-# Reusa feature_engineering (definicao canonica de features) e o modulo de predicao
-if str(DATA_DIR) not in sys.path:
-    sys.path.insert(0, str(DATA_DIR))
+# Reusa feature_engineering (features canonicas) e o resolver de conexao (src/db.py)
+for _p in (str(SRC_DIR), str(DATA_DIR)):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+import db  # noqa: E402
 import feature_engineering as fe  # noqa: E402
 
 
@@ -45,7 +47,7 @@ def _carregar_modulo(nome: str, caminho: Path):
 predict = _carregar_modulo("predict", ML_DIR / "04_predict.py")
 recomendacao = _carregar_modulo("recomendacao", ML_DIR / "recomendacao.py")
 
-ENGINE = create_engine(f"sqlite:///{DB_PATH}")
+ENGINE, BACKEND = db.get_engine()
 
 st.set_page_config(page_title="FarmTech - Assistente Agricola",
                    page_icon="🌱", layout="wide")
@@ -57,25 +59,26 @@ st.set_page_config(page_title="FarmTech - Assistente Agricola",
 @st.cache_data
 def carregar_leituras() -> pd.DataFrame:
     query = """
-        SELECT l.timestamp, l.sensor_id, c.nome AS cultura,
+        SELECT l.ts AS timestamp, l.sensor_id, c.nome AS cultura,
                l.temperatura, l.umidade, l.ph, l.luminosity,
                l.n, l.p, l.k, l.chuva_mm, l.produtividade_kg_ha
         FROM leituras_sensor l
         JOIN culturas c ON c.id = l.cultura_id
     """
-    df = pd.read_sql(query, ENGINE, parse_dates=["timestamp"])
+    df = db.read_sql(query, ENGINE)
+    df["timestamp"] = pd.to_datetime(df["timestamp"])
     return df
 
 
 @st.cache_data
 def carregar_acoes() -> pd.DataFrame:
     query = """
-        SELECT c.nome AS cultura, a.data, a.volume_m3, a.recomendacao_ml
+        SELECT c.nome AS cultura, a.data_acao AS data, a.volume_m3, a.recomendacao_ml
         FROM acoes_irrigacao a
         JOIN culturas c ON c.id = a.cultura_id
         ORDER BY a.volume_m3 DESC
     """
-    return pd.read_sql(query, ENGINE)
+    return db.read_sql(query, ENGINE)
 
 
 @st.cache_data
@@ -102,7 +105,7 @@ def metricas_modelo() -> dict:
 # ---------------------------------------------------------------------
 # Carrega dados base
 # ---------------------------------------------------------------------
-if not DB_PATH.exists():
+if BACKEND == db.SQLITE and not DB_PATH.exists():
     st.error("Banco farmtech.db nao encontrado. Rode antes: "
              "python src/data/load_to_sql.py")
     st.stop()
@@ -111,6 +114,11 @@ df = carregar_leituras()
 
 st.title("🌱 FarmTech Solutions — Assistente Agricola Inteligente")
 st.caption("Pipeline de Machine Learning sobre dados de sensores IoT | Fase 4 CAP 1")
+
+if BACKEND == db.ORACLE:
+    st.sidebar.success("🗄️ Fonte de dados: **Oracle FIAP**")
+else:
+    st.sidebar.info("🗄️ Fonte de dados: **SQLite local** (fallback)")
 
 aba_resumo, aba_corr, aba_pred, aba_tend, aba_acoes = st.tabs(
     ["Resumo", "Correlacoes", "Predicoes", "Tendencias", "Acoes"]
@@ -137,7 +145,7 @@ with aba_resumo:
     fig = px.bar(prod, x="cultura", y="produtividade_kg_ha",
                  color="produtividade_kg_ha", color_continuous_scale="YlGn",
                  labels={"produtividade_kg_ha": "kg/ha"})
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------------------------------------------------
 # Aba 2 - Correlacoes
@@ -148,7 +156,7 @@ with aba_corr:
     corr = df[num_cols].corr()
     fig = px.imshow(corr, text_auto=".2f", color_continuous_scale="RdYlGn",
                     zmin=-1, zmax=1, aspect="auto")
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("#### Dispersao entre variaveis")
     c1, c2 = st.columns(2)
@@ -156,7 +164,7 @@ with aba_corr:
     eixo_y = c2.selectbox("Eixo Y", num_cols, index=len(num_cols) - 1)  # alvo
     fig = px.scatter(df, x=eixo_x, y=eixo_y, color="cultura",
                      opacity=0.6, hover_data=["cultura"])
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------------------------------------------------
 # Aba 3 - Predicoes
@@ -207,7 +215,7 @@ with aba_tend:
         sub["dia"] = sub["timestamp"].dt.date
         serie = (sub.groupby(["dia", "cultura"])[variavel].mean().reset_index())
         fig = px.line(serie, x="dia", y=variavel, color="cultura", markers=False)
-        st.plotly_chart(fig, width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.warning("Selecione ao menos uma cultura.")
 
@@ -224,7 +232,7 @@ with aba_acoes:
     if acoes.empty:
         st.warning("Nenhuma recomendacao gravada. Rode: python src/ml/recomendacao.py")
     else:
-        st.dataframe(acoes, width="stretch", hide_index=True)
+        st.dataframe(acoes, use_container_width=True, hide_index=True)
         st.download_button("Baixar recomendacoes (CSV)",
                            acoes.to_csv(index=False).encode("utf-8"),
                            file_name="recomendacoes_farmtech.csv",

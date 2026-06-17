@@ -7,4 +7,4 @@ Dados brutos e processados do projeto.
 Scripts:
 - `generate_dataset.py`: gera dados simulados se necessario.
 - `feature_engineering.py`: cria features e normaliza.
-- `load_to_sql.py`: carrega dados no banco SQL.
+- `load_to_sql.py`: carrega dados no banco SQL (SQLite sempre + Oracle FIAP se `.env`).

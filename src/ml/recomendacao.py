@@ -15,15 +15,18 @@ Regras baseadas nas faixas agronomicas usadas em generate_dataset.py
 """
 from __future__ import annotations
 
+import sys
 from datetime import date
 from pathlib import Path
 
 import pandas as pd
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 
-ROOT = Path(__file__).resolve().parents[2]
-DB_PATH = ROOT / "farmtech.db"
-ENGINE = create_engine(f"sqlite:///{DB_PATH}")
+# Resolver de conexao central (Oracle FIAP se .env; senao SQLite local)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import db  # noqa: E402
+
+ENGINE, BACKEND = db.get_engine()
 
 # Faixas de referencia
 UMIDADE_OTIMA = 70.0       # %
@@ -82,7 +85,7 @@ def gerar_para_culturas() -> pd.DataFrame:
         JOIN culturas c ON c.id = l.cultura_id
         GROUP BY c.id, c.nome
     """
-    df = pd.read_sql(query, ENGINE)
+    df = db.read_sql(query, ENGINE)
 
     registros = []
     for _, r in df.iterrows():
@@ -90,7 +93,7 @@ def gerar_para_culturas() -> pd.DataFrame:
                          r["n"], r["p"], r["k"])
         registros.append({
             "cultura_id": int(r["cultura_id"]),
-            "data": date.today().isoformat(),
+            "data_acao": pd.Timestamp(date.today()),  # DATE no Oracle; ISO no SQLite
             "volume_m3": rec["volume_m3"],
             "recomendacao_ml": rec["recomendacao_ml"],
         })
@@ -99,7 +102,8 @@ def gerar_para_culturas() -> pd.DataFrame:
     # Limpa recomendacoes anteriores antes de regravar
     with ENGINE.begin() as conn:
         conn.execute(text("DELETE FROM acoes_irrigacao"))
-    saida.to_sql("acoes_irrigacao", ENGINE, if_exists="append", index=False)
+    db.coerce_datetimes(saida, BACKEND).to_sql(
+        "acoes_irrigacao", ENGINE, if_exists="append", index=False)
     return saida
 
 

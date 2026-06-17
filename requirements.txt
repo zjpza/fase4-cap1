@@ -12,6 +12,8 @@ joblib
 
 # DB
 sqlalchemy
+oracledb
+python-dotenv
 
 # Dashboard
 streamlit

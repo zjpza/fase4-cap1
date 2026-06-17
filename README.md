@@ -56,7 +56,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto.
   - <b>src/data</b>: Dataset simulado de sensores agrícolas e scripts de ETL (geração, feature engineering, ingestão SQL).
-  - <b>src/sql</b>: Schema DDL, seed data e views para persistência de dados IoT (umidade, pH, temperatura, produtividade).
+  - <b>src/sql</b>: Schema DDL (SQLite) e seed data para persistência de dados IoT. Subpasta <b>src/sql/oracle</b>: schema, seed e <b>consultas exploratórias</b> para o Oracle Database da FIAP (entrega obrigatória).
   - <b>src/ml</b>: Notebooks de análise exploratória, treinamento de modelos de regressão (Scikit-Learn), avaliação de métricas (MAE, MSE, RMSE, R²) e script de predição.
   - <b>src/dashboard</b>: Aplicação Streamlit com métricas de desempenho, gráficos de correlação, previsões em tempo real e recomendações de irrigação para gestores agrícolas.
 
@@ -68,6 +68,26 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 - Python 3.10+
 - pip
 - Git
+- (Opcional, entrega obrigatória) Acesso ao **Oracle Database da FIAP** + **SQL Developer**
+
+### Banco de dados — persistência dupla (Oracle FIAP + SQLite)
+
+A persistência segue uma estratégia de **duplo backend**, resolvida em `src/db.py`:
+
+- **Oracle Database (FIAP)** — entrega obrigatória. Usado automaticamente quando há
+  credencial válida no arquivo `.env`. Criação, importação e consultas exploratórias
+  documentadas passo a passo (com prints) em **[`docs/oracle_import.md`](docs/oracle_import.md)**.
+- **SQLite local** (`farmtech.db`) — _fallback_ automático: garante que dashboard e ML
+  rodem mesmo sem credencial (ex.: gravação de vídeo offline).
+
+Para usar o Oracle, copie `.env.example` para `.env` e preencha a senha:
+
+```bash
+cp .env.example .env        # ORACLE_USER / ORACLE_PASSWORD / ORACLE_DSN
+```
+
+Sem `.env`, todo o pipeline funciona no SQLite sem nenhuma configuração extra. O dashboard
+exibe um selo indicando a fonte ativa (**Oracle FIAP** ou **SQLite local**).
 
 ### Passo a passo
 
@@ -96,8 +116,11 @@ alvo de regressão `produtividade_kg_ha`.
 ```bash
 python src/data/load_to_sql.py
 ```
-O script lê o CSV processado, recria o schema (`src/sql/01_schema.sql`), trata
-nulos/duplicatas e popula as tabelas. Detalhes em `src/sql/README_SQL.md`.
+O script lê o CSV processado, trata nulos/duplicatas e popula as tabelas. Ele **sempre**
+popula o SQLite (`farmtech.db`) e, se houver `.env` com credencial válida, popula também o
+**Oracle FIAP** (recriando o schema `src/sql/oracle/01_schema_oracle.sql`). Detalhes do
+modelo em `src/sql/README_SQL.md`; importação no SQL Developer em
+[`docs/oracle_import.md`](docs/oracle_import.md).
 
 5. Treine e avalie o modelo de Machine Learning (rode os notebooks na ordem):
 ```bash

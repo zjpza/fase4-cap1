@@ -65,5 +65,7 @@ combinados com a cultura correspondente antes da gravação.
 
 ## Evidências (vídeo / capturas)
 
-- Captura do circuito no Wokwi: _adicionar em `assets/screenshots/`._
-- Captura do Serial Monitor com as leituras: _adicionar em `assets/screenshots/`._
+- Captura do circuito no Wokwi: `assets/screenshots/wokwi/01_circuito.png`.
+- Captura do Serial Monitor com as leituras: `assets/screenshots/wokwi/02_serial_monitor.png`.
+
+Convenção de nomes dos prints em `assets/screenshots/README.md`.

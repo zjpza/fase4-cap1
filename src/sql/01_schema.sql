@@ -34,7 +34,7 @@ CREATE TABLE culturas (
 -- ---------------------------------------------------------------------
 CREATE TABLE leituras_sensor (
     id                   INTEGER PRIMARY KEY AUTOINCREMENT,
-    timestamp            TEXT    NOT NULL,            -- ISO-8601
+    ts                   TEXT    NOT NULL,            -- ISO-8601 (momento da leitura)
     sensor_id            TEXT    NOT NULL,            -- ex.: S001..S010
     cultura_id           INTEGER NOT NULL,
     temperatura          REAL    CHECK (temperatura BETWEEN -10 AND 60),
@@ -55,7 +55,7 @@ CREATE TABLE leituras_sensor (
 CREATE TABLE acoes_irrigacao (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
     cultura_id        INTEGER NOT NULL,
-    data              TEXT    NOT NULL,               -- ISO-8601
+    data_acao         TEXT    NOT NULL,               -- ISO-8601
     volume_m3         REAL    CHECK (volume_m3 >= 0),  -- volume de irrigacao recomendado
     recomendacao_ml   TEXT,                            -- texto gerado pelo motor de recomendacao
     FOREIGN KEY (cultura_id) REFERENCES culturas (id)
@@ -65,6 +65,6 @@ CREATE TABLE acoes_irrigacao (
 -- Indices em colunas frequentemente consultadas
 -- ---------------------------------------------------------------------
 CREATE INDEX idx_leituras_sensor_id   ON leituras_sensor (sensor_id);
-CREATE INDEX idx_leituras_timestamp   ON leituras_sensor (timestamp);
+CREATE INDEX idx_leituras_timestamp   ON leituras_sensor (ts);
 CREATE INDEX idx_leituras_cultura     ON leituras_sensor (cultura_id);
 CREATE INDEX idx_acoes_cultura        ON acoes_irrigacao (cultura_id);
