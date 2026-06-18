@@ -165,7 +165,7 @@ As 5 abas:
 - **Resumo** — indicadores (culturas, leituras, umidade/pH/chuva médios) + barras de
   produtividade por cultura. 📷 `assets/screenshots/dashboard/01_resumo.png`
 - **Correlações** — mapa de calor + dispersão configurável. 📷 `assets/screenshots/dashboard/02_correlacoes.png`
-- **Predições** — métricas do modelo (Modelo, MAE, RMSE, R²) + sliders. Ajuste e clique
+- **Predições** — métricas do modelo (Modelo, MAE, MSE, RMSE, R²) + sliders. Ajuste e clique
   **Prever** → mostra produtividade prevista + recomendação. 📷 `assets/screenshots/dashboard/03_predicoes.png`
 - **Tendências** — linha temporal por cultura/variável.
 - **Ações** — tabela das recomendações geradas + botão *Baixar CSV* e *🔄 Atualizar*.

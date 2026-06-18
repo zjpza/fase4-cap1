@@ -94,10 +94,12 @@ def metricas_modelo() -> dict:
     _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     model, meta = predict._carregar()
     y_pred = model.predict(X_test)
+    mse = float(mean_squared_error(y_test, y_pred))
     return {
         "modelo": meta["melhor_modelo"],
         "MAE": mean_absolute_error(y_test, y_pred),
-        "RMSE": float(np.sqrt(mean_squared_error(y_test, y_pred))),
+        "MSE": mse,
+        "RMSE": float(np.sqrt(mse)),
         "R2": r2_score(y_test, y_pred),
     }
 
@@ -172,11 +174,12 @@ with aba_corr:
 with aba_pred:
     st.subheader("Previsao de produtividade em tempo real")
     met = metricas_modelo()
-    m1, m2, m3, m4 = st.columns(4)
+    m1, m2, m3, m4, m5 = st.columns(5)
     m1.metric("Modelo", met["modelo"])
     m2.metric("MAE", f"{met['MAE']:.0f} kg/ha")
-    m3.metric("RMSE", f"{met['RMSE']:.0f} kg/ha")
-    m4.metric("R2", f"{met['R2']:.3f}")
+    m3.metric("MSE", f"{met['MSE']:,.0f}".replace(",", "."))
+    m4.metric("RMSE", f"{met['RMSE']:.0f} kg/ha")
+    m5.metric("R2", f"{met['R2']:.3f}")
 
     st.markdown("Ajuste as variaveis e clique em **Prever**:")
     col1, col2, col3 = st.columns(3)
