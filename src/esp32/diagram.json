@@ -33,6 +33,8 @@
     }
   ],
   "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
     ["dht:VCC", "esp:3V3", "red", []],
     ["dht:GND", "esp:GND.1", "black", []],
     ["dht:SDA", "esp:15", "green", []],
