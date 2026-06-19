@@ -157,16 +157,6 @@ O dashboard ficará disponível em `http://localhost:8501`.
 - <b>Vídeo demonstrativo (Parte 1)</b>: https://youtu.be/iBv6HP34Jf8
 - <b>Vídeo demonstrativo (Parte 2)</b>: https://youtu.be/gV3HLYRzr5Y
 
-## 🗃 Histórico de lançamentos
-
-- 1.0.0 - 26/05/2026
-  - Fase 4 CAP 1 — FarmTech Solutions: pipeline ML, regressão com Scikit-Learn, dashboard Streamlit, previsões de irrigação e manejo agrícola
-- 0.3.0 - XX/XX/2026
-  - Fase 3: coleta e estruturação de dados agrícolas via sensores IoT
-- 0.2.0 - XX/XX/2026
-  - Fase 2: modelagem de banco de dados relacional FarmTech
-- 0.1.0 - XX/XX/2026
-  - Fase 1: kickoff e mapeamento do problema agrícola
 
 ## 📋 Licença
 
