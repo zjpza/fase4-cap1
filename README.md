@@ -7,11 +7,13 @@
 <br>
 
 ## FarmTech Solutions — Fase 4 CAP 1
+
 ## Assistente Agrícola Inteligente com Machine Learning e Dashboard Streamlit
 
 ## Nome do grupo
 
-## 👨‍🎓 Integrantes: 
+## 👨‍🎓 Integrantes:
+
 - <a href="https://github.com/HenriqueSanchesSilva">Henrique Sanches Silva</a> — RM 570527
 - <a href="https://github.com/zjpza">João Pedro Zavanela Andreu</a> — RM 570231
 - <a href="https://github.com/Kayckxz">Kayck Gabriel Evangelista da Silva</a> — RM 572331
@@ -19,9 +21,13 @@
 - <a href="https://github.com/Trickmelo">Patrick Borges de Melo</a> — RM 574030
 
 ## 👩‍🏫 Professores:
-### Tutor(a) 
+
+### Tutor(a)
+
 - Sabrina Otoni
+
 ### Coordenador(a)
+
 - André Godoi
 
 ## 📜 Descrição
@@ -33,6 +39,7 @@ O protótipo de Assistente Agrícola Inteligente desenvolvido integra sensores I
 A solução demonstra domínio técnico e pensamento analítico na jornada completa: coleta de dados via sensores, armazenamento em banco SQL, modelagem ML com Scikit-Learn, avaliação via métricas (MAE, MSE, RMSE, R²), sugestão automatizada de ações e visualização interativa em tempo real. Tudo isso representa o início da Agricultura Cognitiva — tecnologia que aprende com os dados do campo para otimizar resultados de forma sustentável.
 
 ### Objetivos
+
 - Modelar banco SQL para persistir dados de sensores IoT
 - Treinar modelos de regressão (linear, múltipla e não linear) com Scikit-Learn
 - Avaliar modelos com métricas estatísticas robustas
@@ -65,6 +72,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 ## 🔧 Como executar o código
 
 ### Pré-requisitos
+
 - Python 3.10+
 - pip
 - Git
@@ -92,12 +100,14 @@ exibe um selo indicando a fonte ativa (**Oracle FIAP** ou **SQLite local**).
 ### Passo a passo
 
 1. Clone o repositório:
+
 ```bash
 git clone https://github.com/zjpza/fase4-cap1.git
 cd fase4-cap1
 ```
 
 2. Instale as dependências:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -106,16 +116,20 @@ pip install -r requirements.txt
 > Rode os passos na ordem indicada.
 
 3. Gere o dataset processado (a partir da base agronômica em `src/data/raw`):
+
 ```bash
 python src/data/generate_dataset.py
 ```
+
 Isso cria `src/data/processed/farmtech_dataset.csv` com a telemetria de sensores e o
 alvo de regressão `produtividade_kg_ha`.
 
 4. Crie e popule o banco de dados:
+
 ```bash
 python src/data/load_to_sql.py
 ```
+
 O script lê o CSV processado, trata nulos/duplicatas e popula as tabelas. Ele **sempre**
 popula o SQLite (`farmtech.db`) e, se houver `.env` com credencial válida, popula também o
 **Oracle FIAP** (recriando o schema `src/sql/oracle/01_schema_oracle.sql`). Detalhes do
@@ -123,6 +137,7 @@ modelo em `src/sql/README_SQL.md`; importação no SQL Developer em
 [`docs/oracle_import.md`](docs/oracle_import.md).
 
 5. Treine e avalie o modelo de Machine Learning (rode os notebooks na ordem):
+
 ```bash
 jupyter notebook src/ml/01_eda.ipynb
 jupyter notebook src/ml/02_modelagem.ipynb
@@ -130,55 +145,28 @@ jupyter notebook src/ml/03_avaliacao.ipynb
 ```
 
 6. Execute o dashboard Streamlit:
+
 ```bash
 streamlit run src/dashboard/app.py
 ```
 
 O dashboard ficará disponível em `http://localhost:8501`.
 
-## 🖼 Evidências (capturas)
-
-### Dashboard Streamlit (Parte 1 / Ir Além 2)
-| Resumo | Correlações | Predições |
-| ------ | ----------- | --------- |
-| ![Resumo](assets/screenshots/dashboard/01_resumo.png) | ![Correlações](assets/screenshots/dashboard/02_correlacoes.png) | ![Predições](assets/screenshots/dashboard/03_predicoes.png) |
-
-### Machine Learning (Parte 2)
-![Métricas/correlação do modelo](assets/screenshots/ml/01_metricas.png)
-
-### Banco de dados Oracle FIAP (Ir Além 1)
-| Conexão | Schema | Carga (load_to_sql) |
-| ------- | ------ | ------------------- |
-| ![Conexão](assets/screenshots/oracle/01_conexao.png) | ![Schema](assets/screenshots/oracle/02_schema.png) | ![Carga](assets/screenshots/oracle/03_carga.png) |
-
-Consultas exploratórias ([`03_queries_exploratorias.sql`](src/sql/oracle/03_queries_exploratorias.sql)):
-
-| Q3 — correlações `CORR()` | Q2 — produtividade por cultura | Q5 — outliers (IQR) |
-| ------------------------- | ------------------------------ | ------------------- |
-| ![Q3](assets/screenshots/oracle/04_query_correlacao.png) | ![Q2](assets/screenshots/oracle/05_query_produtividade.png) | ![Q5](assets/screenshots/oracle/06_query_outliers.png) |
-
-### Coleta IoT — ESP32 no Wokwi (opcional)
-| Circuito | Serial Monitor (telemetria JSON) |
-| -------- | -------------------------------- |
-| ![Circuito](assets/screenshots/wokwi/01_circuito.png) | ![Serial Monitor](assets/screenshots/wokwi/02_serial_monitor.png) |
-
 ## 📎 Links e Observações
 
-- <b>Vídeo demonstrativo (Parte 1)</b>: <colocar_link_aqui> (YouTube — não listado)
-- <b>Vídeo demonstrativo (Parte 2)</b>: <colocar_link_aqui> (YouTube — não listado)
-- <b>Vídeo Ir Além 1</b>: <colocar_link_aqui> (YouTube — não listado)
-- <b>Vídeo Ir Além 2</b>: <colocar_link_aqui> (YouTube — não listado)
+- <b>Vídeo demonstrativo (Parte 1)</b>: https://youtu.be/iBv6HP34Jf8
+- <b>Vídeo demonstrativo (Parte 2)</b>: https://youtu.be/gV3HLYRzr5Y
 
 ## 🗃 Histórico de lançamentos
 
-* 1.0.0 - 26/05/2026
-    * Fase 4 CAP 1 — FarmTech Solutions: pipeline ML, regressão com Scikit-Learn, dashboard Streamlit, previsões de irrigação e manejo agrícola
-* 0.3.0 - XX/XX/2026
-    * Fase 3: coleta e estruturação de dados agrícolas via sensores IoT
-* 0.2.0 - XX/XX/2026
-    * Fase 2: modelagem de banco de dados relacional FarmTech
-* 0.1.0 - XX/XX/2026
-    * Fase 1: kickoff e mapeamento do problema agrícola
+- 1.0.0 - 26/05/2026
+  - Fase 4 CAP 1 — FarmTech Solutions: pipeline ML, regressão com Scikit-Learn, dashboard Streamlit, previsões de irrigação e manejo agrícola
+- 0.3.0 - XX/XX/2026
+  - Fase 3: coleta e estruturação de dados agrícolas via sensores IoT
+- 0.2.0 - XX/XX/2026
+  - Fase 2: modelagem de banco de dados relacional FarmTech
+- 0.1.0 - XX/XX/2026
+  - Fase 1: kickoff e mapeamento do problema agrícola
 
 ## 📋 Licença
 
