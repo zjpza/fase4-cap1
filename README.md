@@ -156,7 +156,8 @@ O dashboard ficará disponível em `http://localhost:8501`.
 
 - <b>Vídeo demonstrativo (Parte 1)</b>: https://youtu.be/iBv6HP34Jf8
 - <b>Vídeo demonstrativo (Parte 2)</b>: https://youtu.be/gV3HLYRzr5Y
-
+- <b>Vídeo demonstrativo (Parte 3)</b>: https://youtu.be/rVfGFgB0LRA
+- <b>Vídeo demonstrativo (Parte 4)</b>: https://youtu.be/4eaRzoLR42E
 
 ## 📋 Licença
 
