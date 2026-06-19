@@ -3,27 +3,47 @@
   "author": "FarmTech Solutions - Fase 4 CAP 1",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
-    { "type": "wokwi-dht22", "id": "dht", "top": -150, "left": 180, "attrs": {} },
-    { "type": "wokwi-photoresistor-sensor", "id": "ldr", "top": 0, "left": 220, "attrs": {} },
-    { "type": "wokwi-potentiometer", "id": "ph", "top": 150, "left": 200,
-      "attrs": { "label": "Sensor pH" } }
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht",
+      "top": -150,
+      "left": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr",
+      "top": 0,
+      "left": 220,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "ph",
+      "top": 150,
+      "left": 200,
+      "attrs": { "label": "Sensor pH" }
+    }
   ],
   "connections": [
-    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
-    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    ["dht:VCC", "esp:3V3", "red", []],
+    ["dht:GND", "esp:GND.1", "black", []],
+    ["dht:SDA", "esp:15", "green", []],
 
-    [ "dht:VCC", "esp:3V3", "red", [] ],
-    [ "dht:GND", "esp:GND.1", "black", [] ],
-    [ "dht:SDA", "esp:15", "green", [] ],
+    ["ldr:VCC", "esp:3V3", "red", []],
+    ["ldr:GND", "esp:GND.1", "black", []],
+    ["ldr:AO", "esp:34", "yellow", []],
 
-    [ "ldr:VCC", "esp:3V3", "red", [] ],
-    [ "ldr:GND", "esp:GND.1", "black", [] ],
-    [ "ldr:AO", "esp:34", "yellow", [] ],
-
-    [ "ph:VCC", "esp:3V3", "red", [] ],
-    [ "ph:GND", "esp:GND.1", "black", [] ],
-    [ "ph:SIG", "esp:35", "blue", [] ]
+    ["ph:VCC", "esp:3V3", "red", []],
+    ["ph:GND", "esp:GND.1", "black", []],
+    ["ph:SIG", "esp:35", "blue", []]
   ],
   "dependencies": {}
 }
