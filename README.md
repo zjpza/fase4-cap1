@@ -136,6 +136,32 @@ streamlit run src/dashboard/app.py
 
 O dashboard ficará disponível em `http://localhost:8501`.
 
+## 🖼 Evidências (capturas)
+
+### Dashboard Streamlit (Parte 1 / Ir Além 2)
+| Resumo | Correlações | Predições |
+| ------ | ----------- | --------- |
+| ![Resumo](assets/screenshots/dashboard/01_resumo.png) | ![Correlações](assets/screenshots/dashboard/02_correlacoes.png) | ![Predições](assets/screenshots/dashboard/03_predicoes.png) |
+
+### Machine Learning (Parte 2)
+![Métricas/correlação do modelo](assets/screenshots/ml/01_metricas.png)
+
+### Banco de dados Oracle FIAP (Ir Além 1)
+| Conexão | Schema | Carga (load_to_sql) |
+| ------- | ------ | ------------------- |
+| ![Conexão](assets/screenshots/oracle/01_conexao.png) | ![Schema](assets/screenshots/oracle/02_schema.png) | ![Carga](assets/screenshots/oracle/03_carga.png) |
+
+Consultas exploratórias ([`03_queries_exploratorias.sql`](src/sql/oracle/03_queries_exploratorias.sql)):
+
+| Q3 — correlações `CORR()` | Q2 — produtividade por cultura | Q5 — outliers (IQR) |
+| ------------------------- | ------------------------------ | ------------------- |
+| ![Q3](assets/screenshots/oracle/04_query_correlacao.png) | ![Q2](assets/screenshots/oracle/05_query_produtividade.png) | ![Q5](assets/screenshots/oracle/06_query_outliers.png) |
+
+### Coleta IoT — ESP32 no Wokwi (opcional)
+| Circuito | Serial Monitor (telemetria JSON) |
+| -------- | -------------------------------- |
+| ![Circuito](assets/screenshots/wokwi/01_circuito.png) | ![Serial Monitor](assets/screenshots/wokwi/02_serial_monitor.png) |
+
 ## 📎 Links e Observações
 
 - <b>Vídeo demonstrativo (Parte 1)</b>: <colocar_link_aqui> (YouTube — não listado)
