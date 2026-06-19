@@ -79,17 +79,46 @@ def simular(n_sensores: int, horas: int, intervalo_min: int,
     return pd.DataFrame(registros).sort_values("timestamp").reset_index(drop=True)
 
 
+def emitir_serial(df: pd.DataFrame, limite: int, atraso: float) -> None:
+    """
+    Reproduz no terminal o stream JSON que o firmware (arduino_sensores.ino)
+    publica no Serial Monitor do Wokwi, uma leitura por linha. Serve de
+    evidencia de coleta quando o Serial Monitor do Wokwi nao esta acessivel.
+    """
+    import time
+
+    print("FarmTech ESP32 - coleta de sensores iniciada")
+    for _, r in df.head(limite).iterrows():
+        print(
+            '{"temperatura":%.1f,"umidade":%.1f,"ph":%.2f,"luminosity":%.0f}'
+            % (r["temperatura"], r["umidade"], r["ph"], r["luminosity"])
+        )
+        if atraso:
+            time.sleep(atraso)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Simulador de sensores ESP32 (FarmTech)")
     parser.add_argument("--sensores", type=int, default=5, help="numero de sensores")
     parser.add_argument("--horas", type=int, default=48, help="duracao em horas")
     parser.add_argument("--intervalo", type=int, default=30,
                         help="intervalo entre leituras (min)")
+    parser.add_argument("--serial", action="store_true",
+                        help="imprime as leituras como JSON no terminal "
+                             "(espelha o Serial Monitor do Wokwi)")
+    parser.add_argument("--limite", type=int, default=20,
+                        help="nº de linhas JSON no modo --serial")
+    parser.add_argument("--atraso", type=float, default=0.3,
+                        help="segundos entre linhas no modo --serial")
     args = parser.parse_args()
 
     df = simular(args.sensores, args.horas, args.intervalo)
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUT_CSV, index=False)
+
+    if args.serial:
+        emitir_serial(df, args.limite, args.atraso)
+        return
 
     print(f"[OK] {len(df)} leituras de {args.sensores} sensores em {args.horas}h.")
     print(f"     salvo em {OUT_CSV} (telemetria de sensores, sem cultura/NPK/alvo)")

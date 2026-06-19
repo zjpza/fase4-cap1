@@ -50,6 +50,24 @@ python src/esp32/simulacao.py --sensores 5 --horas 48 --intervalo 30
 Gera `src/data/processed/simulacao_sensores.csv`, que pode alimentar o pipeline
 de ingestão e análise.
 
+### Stream no terminal (espelho do Serial Monitor)
+
+Quando o Serial Monitor do Wokwi não estiver acessível, o modo `--serial`
+reproduz no terminal o **mesmo stream JSON** que o firmware publica, uma leitura
+por linha — serve de evidência da coleta:
+
+```bash
+python src/esp32/simulacao.py --serial            # 20 linhas, 0.3 s entre elas
+python src/esp32/simulacao.py --serial --limite 30 --atraso 0
+```
+
+Saída idêntica ao `arduino_sensores.ino`:
+
+```
+FarmTech ESP32 - coleta de sensores iniciada
+{"temperatura":24.3,"umidade":61.0,"ph":6.52,"luminosity":48000}
+```
+
 ## Integração com o pipeline
 
 O JSON publicado pelo ESP32 e o CSV da simulação trazem os campos de **sensor**
