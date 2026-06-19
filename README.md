@@ -10,8 +10,6 @@
 
 ## Assistente Agrícola Inteligente com Machine Learning e Dashboard Streamlit
 
-## Nome do grupo
-
 ## 👨‍🎓 Integrantes:
 
 - <a href="https://github.com/HenriqueSanchesSilva">Henrique Sanches Silva</a> — RM 570527
@@ -57,11 +55,14 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
 
+- <b>docs</b>: documentação técnica passo a passo do projeto — importação no Oracle FIAP (`oracle_import.md`) e simulação de sensores IoT no Wokwi (`esp32.md`), ambos com prints.
+
 - <b>document</b>: aqui estão todos os documentos do projeto que as atividades poderão pedir. Na subpasta "other", adicione documentos complementares e menos importantes.
 
 - <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
 
 - <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto.
+  - <b>src/esp32</b>: Simulação de sensores IoT no Wokwi (firmware `arduino_sensores.ino`, `diagram.json`, `wokwi.toml`) e gerador de telemetria em Python (`simulacao.py`) — fonte dos dados IoT ingeridos no banco.
   - <b>src/data</b>: Dataset simulado de sensores agrícolas e scripts de ETL (geração, feature engineering, ingestão SQL).
   - <b>src/sql</b>: Schema DDL (SQLite) e seed data para persistência de dados IoT. Subpasta <b>src/sql/oracle</b>: schema, seed e <b>consultas exploratórias</b> para o Oracle Database da FIAP (entrega obrigatória).
   - <b>src/ml</b>: Notebooks de análise exploratória, treinamento de modelos de regressão (Scikit-Learn), avaliação de métricas (MAE, MSE, RMSE, R²) e script de predição.
